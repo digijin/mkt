@@ -1,51 +1,34 @@
 import React, { useState } from 'react';
+import './App.css';
+import Home from './Home';
 import ContactInfo from './ContactInfo';
 import FacebookInfo from './FacebookInfo';
 import GoogleAdsInfo from './GoogleAdsInfo';
 
 const App: React.FC = () => {
-  const [showContact, setShowContact] = useState(false);
-  const [showFacebook, setShowFacebook] = useState(false);
-  const [showGoogleAds, setShowGoogleAds] = useState(false);
+  const [activeSection, setActiveSection] = useState('home');
 
-  const handleContactClick = (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
+  const handleNavClick = (section: string) => (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
     e.preventDefault();
-    setShowContact(!showContact);
-    setShowFacebook(false);
-    setShowGoogleAds(false);
-  };
-
-  const handleFacebookClick = (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
-    e.preventDefault();
-    setShowFacebook(!showFacebook);
-    setShowContact(false);
-    setShowGoogleAds(false);
-  };
-
-  const handleGoogleAdsClick = (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
-    e.preventDefault();
-    setShowGoogleAds(!showGoogleAds);
-    setShowContact(false);
-    setShowFacebook(false);
+    setActiveSection(section);
   };
 
   return (
     <div>
-      <h1>Hello, world!</h1>
+      <h1>Marketing App</h1>
       <nav>
         <ul>
-          <li><a href="#home">Home</a></li>
-          <li><a href="#about">About</a></li>
-          <li><a href="#contact" onClick={handleContactClick}>Contact</a></li>
-          <li><a href="#facebook" onClick={handleFacebookClick}>Facebook</a></li>
-          <li><a href="#google-ads" onClick={handleGoogleAdsClick}>Google Ads</a></li>
+          <li><a href="#home" onClick={handleNavClick('home')}>Home</a></li>
+          <li><a href="#contact" onClick={handleNavClick('contact')}>Contact</a></li>
+          <li><a href="#facebook" onClick={handleNavClick('facebook')}>Facebook</a></li>
+          <li><a href="#google-ads" onClick={handleNavClick('google-ads')}>Google Ads</a></li>
         </ul>
       </nav>
       <div>
-        <p>React app with TypeScript</p>
-        {showContact && <ContactInfo />}
-        {showFacebook && <FacebookInfo />}
-        {showGoogleAds && <GoogleAdsInfo />}
+        {activeSection === 'home' && <Home />}
+        {activeSection === 'contact' && <ContactInfo />}
+        {activeSection === 'facebook' && <FacebookInfo />}
+        {activeSection === 'google-ads' && <GoogleAdsInfo />}
       </div>
     </div>
   );
